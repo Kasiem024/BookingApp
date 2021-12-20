@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/users', function(req, res, next) {
     if (typeof req.headers.referer != 'undefined') {
         const data = require('../public/data/users.json');
-        send(data);
+        res.send(data);
     } else {
         res.send('<h1>Unathourized Access</h1>');
     }
