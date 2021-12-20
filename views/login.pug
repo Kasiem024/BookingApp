@@ -1,22 +1,43 @@
 extends layout
 
 block content
-  script(src="/javascripts/login.js" type ="module") 
+  script(src="/javascripts/login.js") 
   h1= title
-  p Welcome to LOGIN PAGE
-  form
-    label E-mail
-    input(type='text' placeholder='example@example.com')
+  p Login
+  #divLogin
+    form
+      label(for='email')
+        p Email
+      input(type='email' placeholder='Enter Email' name='email' id="tBoxLoginEmail" required)
+      label(for='tBoxLoginPassword')
+        p Password
+      input(type='password' placeholder='Enter Password' name='tBoxLoginPassword' id="tBoxLoginPassword" required)
+      button(type='button' onclick='functionLogin()') Login
 
-    br
-    br
+      br
+      br
 
-    label Password
-    input(type='password' placeholder='ExamplePassword123')
-    button(type='button' onclick='functionLogin()') Login
+      button(type='button' onclick='functionShowCreateAccount()') Create account
 
-    br
-    br
+  #divCreateAccount(style="display:none;")
+    form
+      h2 Sign Up
+      hr
+      label(for='tBoxFullName')
+        p Full Name
+      input(type='text' placeholder='Enter Full Name' name='tBoxFullName' id="tBoxFullName" required)
+      label(for='email')
+        p Email
+      input(type='email' placeholder='Enter Email' name='email' id="tBoxCreateEmail" required)
+      label(for='psw')
+        p Password
+      input(type='password' placeholder='Enter Password' name='psw' id="tBoxCreatePassword" required)
+      label(for='tBoxRepeatPassword')
+        p Repeat Password
+      input(type='password' placeholder='Repeat Password' name='tBoxRepeatPassword' id="tBoxRepeatPassword" required)
 
-    button(type='button' onclick='functionCreateAccount()')() Create account
+      br
+      br
 
+      button(type='button' onclick='functionCancelCreateAccount()') Cancel
+      button(type='button' onclick='functionCreateAccount()') Create Account

@@ -29,3 +29,26 @@ const load = (res) => {
     console.log(dataCurrentWeek);
     console.log(dataNextWeek);
 }
+
+const functionShowCreateAccount = () => {
+    console.log('functionShowCreateAccount');
+    document.getElementById('divLogin').style.display = 'none';
+    document.getElementById('divCreateAccount').style.display = 'block';
+}
+const functionCancelCreateAccount = () => {
+    console.log('functionCancelCreateAccount');
+    document.getElementById('divLogin').style.display = 'block';
+    document.getElementById('divCreateAccount').style.display = 'none';
+}
+
+const functionCreateAccount = () => {
+    console.log('functionCreateAccount');
+
+    const fullName = document.getElementById('tBoxFullName').value;
+    const email = document.getElementById('tBoxCreateEmail').value;
+    const password = document.getElementById('tBoxCreatePassword').value;
+    const repeatPassword = document.getElementById('tBoxRepeatPassword').value;
+
+
+
+}
