@@ -3,3 +3,16 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  #container
+    h2 What time do you want to book?
+    br
+    br
+    button#btnCancelId(onclick='functionBtnCancel()' disabled) Cancel
+    br
+    br
+    form#formId(method='POST')
+      input#tboxBookTimeId(type='text' name='tboxBookTimeName')
+    br
+    button#btnSignOutId(onclick='functionBtnSignOut()') Signout
+    #calendar
+
