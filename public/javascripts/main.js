@@ -2,10 +2,6 @@
 
 console.log('main.js is alive');
 
-let dataUsers = [];
-let dataCurrentWeek = [];
-let dataNextWeek = [];
-
 const fetchUsersInfo = fetch(
     '/data/users'
 ).then((res) => res.json());
@@ -22,12 +18,16 @@ const allData = Promise.all([fetchUsersInfo, fetchCurrentWeekInfo, fetchNexttWee
 
 allData.then((res) => load(res));
 
+export function exportData() {
+    return 'hej';
+}
+
 let load = (res) => {
     console.log(res)
 
-    dataUsers = res[0].users;
-    dataCurrentWeek = res[1].currentWeek;
-    dataNextWeek = res[2].nextWeek;
+    const dataUsers = res[0].users;
+    const dataCurrentWeek = res[1].currentWeek;
+    const dataNextWeek = res[2].nextWeek;
 
     console.log(dataUsers);
     console.log(dataCurrentWeek);

@@ -1,5 +1,22 @@
 extends layout
 
 block content
+  script(src="/javascripts/login.js" type ="module") 
   h1= title
   p Welcome to LOGIN PAGE
+  form
+    label E-mail
+    input(type='text' placeholder='example@example.com')
+
+    br
+    br
+
+    label Password
+    input(type='password' placeholder='ExamplePassword123')
+    button(type='button' onclick='functionLogin()') Login
+
+    br
+    br
+
+    button(type='button' onclick='functionCreateAccount()')() Create account
+
