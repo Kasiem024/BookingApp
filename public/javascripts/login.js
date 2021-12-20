@@ -2,6 +2,10 @@
 
 console.log('login.js is alive');
 
+let dataUsers = [];
+let dataCurrentWeek = []
+let dataNextWeek = []
+
 const fetchUsersInfo = fetch(
     '/data/users'
 ).then((res) => res.json());
@@ -21,9 +25,9 @@ allData.then((res) => load(res));
 const load = (res) => {
     console.log(res)
 
-    const dataUsers = res[0].users;
-    const dataCurrentWeek = res[1].currentWeek;
-    const dataNextWeek = res[2].nextWeek;
+    dataUsers = res[0].users;
+    dataCurrentWeek = res[1].currentWeek;
+    dataNextWeek = res[2].nextWeek;
 
     console.log(dataUsers);
     console.log(dataCurrentWeek);
@@ -44,11 +48,45 @@ const functionCancelCreateAccount = () => {
 const functionCreateAccount = () => {
     console.log('functionCreateAccount');
 
+    let error = document.getElementById('errorMessage');
+    error.innerHTML = null;
+
     const fullName = document.getElementById('tBoxFullName').value;
     const email = document.getElementById('tBoxCreateEmail').value;
     const password = document.getElementById('tBoxCreatePassword').value;
     const repeatPassword = document.getElementById('tBoxRepeatPassword').value;
 
+    let counterCorrect = 0;
 
+    dataUsers.forEach(element => {
+        console.log(element.email)
+        if (element.email != email) {
+            console.log('Correct email');
+            counterCorrect++;
+            console.log(counterCorrect)
+        } else {
+            error.textContent = 'Email already exists ';
+        }
+    });
 
+    if (password == repeatPassword && password != '' && repeatPassword != '') {
+        console.log('Correct password');
+        counterCorrect++;
+    } else {
+        console.log('Incorrect password');
+        error.textContent += 'Incorrect password';
+    }
+
+    if (counterCorrect == 2) {
+        const data = { fullName: fullName, email: email, password: password };
+
+        fetch('login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(console.log('hej'))
+    }
 }

@@ -20,7 +20,7 @@ block content
       button(type='button' onclick='functionShowCreateAccount()') Create account
 
   #divCreateAccount(style="display:none;")
-    form
+    form(method='dialog')
       h2 Sign Up
       hr
       label(for='tBoxFullName')
@@ -32,12 +32,11 @@ block content
       label(for='psw')
         p Password
       input(type='password' placeholder='Enter Password' name='psw' id="tBoxCreatePassword" required)
-      label(for='tBoxRepeatPassword')
+      label(for='psw')
         p Repeat Password
-      input(type='password' placeholder='Repeat Password' name='tBoxRepeatPassword' id="tBoxRepeatPassword" required)
-
+      input(type='password' placeholder='Repeat Password' name='psw' id="tBoxRepeatPassword" required)
+      p#errorMessage
       br
       br
-
       button(type='button' onclick='functionCancelCreateAccount()') Cancel
-      button(type='button' onclick='functionCreateAccount()') Create Account
+      button(type='submit' onclick='functionCreateAccount()') Create Account

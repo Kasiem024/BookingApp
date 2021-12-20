@@ -1,9 +1,11 @@
 {
     "users": [{
-        "name": "kasiem",
+        "fullName": "Kasiem Saeed",
+        "email": "kasiemsaeed@gmail.com",
         "password": "kasiem123"
     }, {
-        "name": "admin",
+        "fullName": "admin",
+        "email": "kasiemsaeed@gmail.com",
         "password": "admin123"
     }]
 }

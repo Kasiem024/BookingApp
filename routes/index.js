@@ -10,19 +10,24 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-    let dataUsers = require('../data/users.json');
+    console.log(req.body)
 
-    dataUsers.users.push({
-        "name": "placeholder",
-        "password": "placeholder"
-    })
+    // let dataUsers = require('../data/users.json');
 
-    const fs = require('fs');
+    // dataUsers.users.push({
+    //     "name": "placeholder",
+    //     "password": "placeholder"
+    // })
 
-    fs.writeFile('./data/users.json', JSON.stringify(dataUsers), function(err) {
-        if (err) throw err;
-        console.log('File is created successfully.');
-    });
+    // const fs = require('fs');
+
+    // fs.writeFile('./data/users.json', JSON.stringify(dataUsers), function(err) {
+    //     if (err) throw err;
+    //     console.log('File is created successfully.');
+    // });
+
+    res.render('index', { title: 'BookingApp' });
+
 });
 
 module.exports = router;
