@@ -3,11 +3,10 @@
         "fullName": "Kasiem Saeed",
         "email": "kasiemsaeed@gmail.com",
         "password": "kasiem123",
-        "timeBooked1": null,
-        "timeBooked2": null
+        "timeBooked": null
     }, {
         "fullName": "admin",
-        "email": "kasiemsaeed@gmail.com",
+        "email": "admin",
         "password": "admin123"
     }]
 }
