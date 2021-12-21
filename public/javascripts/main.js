@@ -65,7 +65,6 @@ let load = (res) => {
         let mybr = document.createElement('br');
         document.getElementById('calendar').appendChild(mybr);
 
-        // Printing what day it is
         const p = document.createElement('p');
         p.textContent = day.day;
         document.getElementById('calendar').appendChild(p);
@@ -81,8 +80,6 @@ let load = (res) => {
             btn.id = day.day + "," + time.time;
             btn.className = 'btnBookClass';
 
-            console.log(btn.id)
-
             btn.addEventListener('click', functionBtnBook)
 
             document.getElementById('calendar').appendChild(btn);
@@ -95,9 +92,49 @@ let load = (res) => {
 }
 
 const functionBtnBook = (event) => {
-    console.log('This is book');
-    console.log(event.target.id);
+    console.log('This is book ------------------------');
 
+    document.getElementById('btnCancelId').disabled = false;
+    document.getElementById('btnConfirmId').disabled = false;
+
+    const id = event.target.id.split(',');
+
+    let btnDay = id[0];
+    let btnTime = id[1];
+
+    console.log(btnDay);
+    console.log(btnTime);
+
+    dataCurrentWeek.forEach(day => {
+
+        if (day.day == btnDay) {
+
+            day.times.forEach(time => {
+
+                if (time.time == btnTime) {
+
+                    dataUsers.forEach(user => {
+                        if (user.email == userLoggedin) {
+                            if (user.timeBooked == null) {
+                                console.log('1');
+                                user.timeBooked1 = event.target.id;
+                                time.bookedBy = userLoggedin;
+
+                            } else {
+                                console.log('2');
+                                document.getElementById('btnCancelId').disabled = true;
+                                document.getElementById('btnConfirmId').disabled = true;
+                            }
+                        }
+                    });
+
+                }
+            });
+        }
+    });
+
+    console.log(dataCurrentWeek);
+    console.log(dataUsers);
 }
 
 const functionBtnConfirm = () => {
