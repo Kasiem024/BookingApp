@@ -30,6 +30,33 @@ const load = (res) => {
     dataUsers = res[0].users;
 }
 
+const functionLogin = () => {
+    console.log('functionLogin');
+
+    const email = document.getElementById('tBoxLoginEmail').value;
+    const password = document.getElementById('tBoxLoginPassword').value;
+
+    let error = document.getElementById('errorMessageLogin');
+    error.innerHTML = null;
+
+    let findEmail = dataUsers.find(element => element.email == email);
+    let findPassword = dataUsers.find(element => element.password == password);
+
+
+    if (findEmail != undefined && findPassword != undefined) {
+        document.cookie = 'user=' + email;
+        location.href = '/';
+    }
+
+    if (findEmail == undefined) {
+        error.textContent += 'Incorrect email ';
+    }
+
+    if (findPassword == undefined) {
+        error.textContent += 'Incorrect password ';
+    }
+}
+
 const functionShowCreateAccount = () => {
     console.log('functionShowCreateAccount');
     document.getElementById('divLogin').style.display = 'none';
@@ -44,7 +71,7 @@ const functionCancelCreateAccount = () => {
 const functionCreateAccount = () => {
     console.log('functionCreateAccount');
 
-    let error = document.getElementById('errorMessage');
+    let error = document.getElementById('errorMessageCreate');
     error.innerHTML = null;
 
     const fullName = document.getElementById('tBoxFullName').value;

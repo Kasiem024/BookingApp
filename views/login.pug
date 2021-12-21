@@ -5,14 +5,15 @@ block content
   h1= title
   p Login
   #divLogin
-    form(autocomplete='on')
+    form(method='dialog' autocomplete='on')
       label(for='email')
         p Email
       input(type='email' placeholder='Enter Email' name='email' id="tBoxLoginEmail" autocomplete='email' required)
       label(for='current-password')
         p Password
       input(type='password' placeholder='Enter Password' name='current-password' id="tBoxLoginPassword" autocomplete='current-password' required)
-      button(type='button' onclick='functionLogin()') Login
+      p#errorMessageLogin
+      button(type='submit' onclick='functionLogin()') Login
 
       br
       br
@@ -35,7 +36,7 @@ block content
       label(for='repeat-password')
         p Repeat Password
       input(type='password' placeholder='Repeat Password' name='repeat-password' id="tBoxRepeatPassword" autocomplete='new-password' required)
-      p#errorMessage
+      p#errorMessageCreate
       br
       br
       button(type='button' onclick='functionCancelCreateAccount()') Cancel
