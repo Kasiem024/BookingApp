@@ -18,9 +18,24 @@ const allData = Promise.all([fetchUsersInfo, fetchCurrentWeekInfo, fetchNexttWee
 
 allData.then((res) => load(res));
 
-export function exportData() {
-    return 'hej';
+console.log(document.cookie);
+
+try {
+    if (document.cookie != '') {
+
+        if (document.cookie.split(' ').find(row => row.startsWith('user=')).split('=')[1] == '') {
+
+            location.href = '/login';
+        }
+    } else {
+        location.href = '/login';
+    }
+
+} catch (error) {
+    location.href = '/login';
+    console.log(error)
 }
+
 
 let load = (res) => {
     console.log(res)
