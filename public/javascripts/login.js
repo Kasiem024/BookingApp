@@ -3,35 +3,17 @@
 console.log('login.js is alive');
 
 let dataUsers = [];
-let dataCurrentWeek = []
-let dataNextWeek = []
 
 const fetchUsersInfo = fetch(
     '/data/users'
 ).then((res) => res.json());
 
-const fetchCurrentWeekInfo = fetch(
-    '/data/currentWeek'
-).then((res) => res.json());
-
-const fetchNexttWeekInfo = fetch(
-    '/data/nextWeek'
-).then((res) => res.json());
-
-const allData = Promise.all([fetchUsersInfo, fetchCurrentWeekInfo, fetchNexttWeekInfo]);
+const allData = Promise.all([fetchUsersInfo]);
 
 allData.then((res) => load(res));
 
 const load = (res) => {
-    console.log(res)
-
     dataUsers = res[0].users;
-    dataCurrentWeek = res[1].currentWeek;
-    dataNextWeek = res[2].nextWeek;
-
-    console.log(dataUsers);
-    console.log(dataCurrentWeek);
-    console.log(dataNextWeek);
 }
 
 const functionShowCreateAccount = () => {
@@ -56,33 +38,36 @@ const functionCreateAccount = () => {
     const password = document.getElementById('tBoxCreatePassword').value;
     const repeatPassword = document.getElementById('tBoxRepeatPassword').value;
 
-    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    const validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
     let counterCorrect = 0;
 
-    if (email != '' && email.match(validRegex)) {
-        let findEmail = dataUsers.find(element => element == email)
+    if (email != '' && email.match(validEmail)) {
+        let findEmail = dataUsers.find(element => element.email == email);
 
         if (findEmail == undefined) {
             console.log('Correct email');
             counterCorrect++;
 
-        } else {
+        } else if (findEmail.email != undefined) {
             error.textContent = 'Email already exists ';
         }
     }
 
-    if (password == repeatPassword && password != '' && repeatPassword != '') {
+    if (password.match(validPassword) && password == repeatPassword) {
+
         console.log('Correct password');
         counterCorrect++;
 
     } else {
         console.log('Incorrect password');
-        error.textContent += 'Incorrect password';
+        error.innerHTML += 'Incorrect password <br> Password must be at least 6 characters which contain at least one number, one uppercase and one lowercase letter';
     }
 
     if (counterCorrect == 2) {
-        const data = {
+        const dataUser = {
             fullName: fullName,
             email: email,
             password: password
@@ -93,8 +78,14 @@ const functionCreateAccount = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(dataUser),
             })
-            .then(console.log('Finished'));
+            .then(functionAcountCreated(email));
     }
+}
+
+const functionAcountCreated = (email) => {
+    document.cookie = 'user=' + email;
+
+    location.href = '/';
 }
