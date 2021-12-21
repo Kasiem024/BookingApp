@@ -4,6 +4,20 @@ console.log('login.js is alive');
 
 let dataUsers = [];
 
+console.log(document.cookie);
+
+try {
+    if (document.cookie != '') {
+
+        if (document.cookie.split(' ').find(row => row.startsWith('user=')).split('=')[1] != '') {
+
+            location.href = '/';
+        }
+    }
+} catch (error) {
+    console.log(error);
+}
+
 const fetchUsersInfo = fetch(
     '/data/users'
 ).then((res) => res.json());

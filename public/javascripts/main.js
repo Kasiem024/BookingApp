@@ -2,6 +2,31 @@
 
 console.log('main.js is alive');
 
+let dataUsers = [];
+let dataCurrentWeek = [];
+let dataNextWeek = [];
+
+console.log(document.cookie);
+
+let userLoggedin;
+
+try {
+    if (document.cookie != '') {
+
+        if (document.cookie.split(' ').find(row => row.startsWith('user=')).split('=')[1] == '') {
+
+            location.href = '/login';
+        } else {
+            userLoggedin = document.cookie.split(' ').find(row => row.startsWith('user=')).split('=')[1];
+        }
+    } else {
+        location.href = '/login';
+    }
+
+} catch (error) {
+    location.href = '/login';
+}
+
 const fetchUsersInfo = fetch(
     '/data/users'
 ).then((res) => res.json());
@@ -18,31 +43,15 @@ const allData = Promise.all([fetchUsersInfo, fetchCurrentWeekInfo, fetchNexttWee
 
 allData.then((res) => load(res));
 
-console.log(document.cookie);
-
-try {
-    if (document.cookie != '') {
-
-        if (document.cookie.split(' ').find(row => row.startsWith('user=')).split('=')[1] == '') {
-
-            location.href = '/login';
-        }
-    } else {
-        location.href = '/login';
-    }
-
-} catch (error) {
-    location.href = '/login';
-    console.log(error)
-}
-
-
 let load = (res) => {
+
+    console.log(userLoggedin)
+
     console.log(res)
 
-    const dataUsers = res[0].users;
-    const dataCurrentWeek = res[1].currentWeek;
-    const dataNextWeek = res[2].nextWeek;
+    dataUsers = res[0].users;
+    dataCurrentWeek = res[1].currentWeek;
+    dataNextWeek = res[2].nextWeek;
 
     console.log(dataUsers);
     console.log(dataCurrentWeek);
