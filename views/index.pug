@@ -1,18 +1,14 @@
 extends layout
 
 block content
-  script(src="/javascripts/main.js" type="module") 
+  script(src="/javascripts/main.js") 
   h1= title
   p Welcome to #{title}
   #container
     h2 What time do you want to book?
-    br
-    br
+    button#btnConfirmId(onclick='functionBtnConfirm()' disabled) Confirm
     button#btnCancelId(onclick='functionBtnCancel()' disabled) Cancel
     br
-    br
-    form#formId(method='POST')
-      input#tboxBookTimeId(type='text' name='tboxBookTimeName')
     br
     button#btnSignOutId(onclick='functionBtnSignOut()') Signout
     #calendar
