@@ -21,7 +21,9 @@ router.post('/login', function(req, res, next) {
     dataUser.users.push({
         "name": req.body.fullName,
         "email": req.body.email,
-        "password": req.body.password
+        "password": req.body.password,
+        "timeBooked1": null,
+        "timeBooked2": null
     })
 
     const fs = require('fs');

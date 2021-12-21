@@ -2,7 +2,9 @@
     "users": [{
         "fullName": "Kasiem Saeed",
         "email": "kasiemsaeed@gmail.com",
-        "password": "kasiem123"
+        "password": "kasiem123",
+        "timeBooked1": null,
+        "timeBooked2": null
     }, {
         "fullName": "admin",
         "email": "kasiemsaeed@gmail.com",
