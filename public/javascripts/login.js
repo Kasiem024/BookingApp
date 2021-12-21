@@ -56,29 +56,37 @@ const functionCreateAccount = () => {
     const password = document.getElementById('tBoxCreatePassword').value;
     const repeatPassword = document.getElementById('tBoxRepeatPassword').value;
 
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
     let counterCorrect = 0;
 
-    dataUsers.forEach(element => {
-        console.log(element.email)
-        if (element.email != email) {
+    if (email != '' && email.match(validRegex)) {
+        let findEmail = dataUsers.find(element => element == email)
+
+        if (findEmail == undefined) {
             console.log('Correct email');
             counterCorrect++;
-            console.log(counterCorrect)
+
         } else {
             error.textContent = 'Email already exists ';
         }
-    });
+    }
 
     if (password == repeatPassword && password != '' && repeatPassword != '') {
         console.log('Correct password');
         counterCorrect++;
+
     } else {
         console.log('Incorrect password');
         error.textContent += 'Incorrect password';
     }
 
     if (counterCorrect == 2) {
-        const data = { fullName: fullName, email: email, password: password };
+        const data = {
+            fullName: fullName,
+            email: email,
+            password: password
+        };
 
         fetch('login', {
                 method: 'POST',
@@ -87,6 +95,6 @@ const functionCreateAccount = () => {
                 },
                 body: JSON.stringify(data),
             })
-            .then(console.log('hej'))
+            .then(console.log('Finished'));
     }
 }
