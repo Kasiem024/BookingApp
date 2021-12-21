@@ -5,13 +5,13 @@ block content
   h1= title
   p Login
   #divLogin
-    form
+    form(autocomplete='on')
       label(for='email')
         p Email
-      input(type='email' placeholder='Enter Email' name='email' id="tBoxLoginEmail" required)
-      label(for='tBoxLoginPassword')
+      input(type='email' placeholder='Enter Email' name='email' id="tBoxLoginEmail" autocomplete='email' required)
+      label(for='current-password')
         p Password
-      input(type='password' placeholder='Enter Password' name='tBoxLoginPassword' id="tBoxLoginPassword" required)
+      input(type='password' placeholder='Enter Password' name='current-password' id="tBoxLoginPassword" autocomplete='current-password' required)
       button(type='button' onclick='functionLogin()') Login
 
       br
@@ -20,21 +20,21 @@ block content
       button(type='button' onclick='functionShowCreateAccount()') Create account
 
   #divCreateAccount(style="display:none;")
-    form(method='dialog')
+    form(method='dialog' autocomplete='on')
       h2 Sign Up
       hr
-      label(for='tBoxFullName')
+      label(for='name')
         p Full Name
-      input(type='text' placeholder='Enter Full Name' name='tBoxFullName' id="tBoxFullName" required)
+      input(type='text' placeholder='Enter Full Name' name='name' id="tBoxFullName" autocomplete='name' required)
       label(for='email')
         p Email
-      input(type='email' placeholder='Enter Email' name='email' id="tBoxCreateEmail" required)
-      label(for='psw')
+      input(type='email' placeholder='Enter Email' name='email' id="tBoxCreateEmail" autocomplete='email' required)
+      label(for='new-password')
         p Password
-      input(type='password' placeholder='Enter Password' name='psw' id="tBoxCreatePassword" required title='Password must be at least 6 characters which contain at least one number, one uppercase and one lowercase letter')
-      label(for='psw')
+      input(type='password' placeholder='Enter Password' name='password' id="tBoxCreatePassword" autocomplete='new-password' required title='Password must be at least 6 characters which contain at least one number, one uppercase and one lowercase letter')
+      label(for='repeat-password')
         p Repeat Password
-      input(type='password' placeholder='Repeat Password' name='psw' id="tBoxRepeatPassword" required)
+      input(type='password' placeholder='Repeat Password' name='repeat-password' id="tBoxRepeatPassword" autocomplete='new-password' required)
       p#errorMessage
       br
       br
