@@ -22,7 +22,7 @@ router.post('/login', function(req, res, next) {
         "name": req.body.fullName,
         "email": req.body.email,
         "password": req.body.password,
-        "timeBooked1": null
+        "timeBooked": null
     })
 
     const fs = require('fs');
