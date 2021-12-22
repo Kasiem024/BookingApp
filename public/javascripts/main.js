@@ -57,6 +57,27 @@ let load = (res) => {
     if (location.href.includes('showBooking')) {
         console.log('This is showBooking page');
 
+        dataCurrentWeek.forEach(day => {
+
+            day.times.forEach(time => {
+
+                if (time.bookedBy == userLoggedin) {
+
+                    const p = document.createElement('p');
+                    p.textContent = 'You have booked on ' + day.day + ' at ' + time.time;
+                    document.getElementById('divShowBooking').appendChild(p);
+
+                    const btn = document.createElement('button');
+                    btn.textContent = 'Cancel this booking';
+                    btn.id = day.day + "," + time.time;
+                    btn.className = 'btnCancelBookingClass';
+                    btn.addEventListener('click', functionBtnCancelBooking)
+                    document.getElementById('divShowBooking').appendChild(btn);
+                }
+
+            });
+        });
+
     } else {
 
         console.log('This is index page')
@@ -66,11 +87,11 @@ let load = (res) => {
             // console.log(counterDay);
 
             let mybr = document.createElement('br');
-            document.getElementById('calendar').appendChild(mybr);
+            document.getElementById('divBook').appendChild(mybr);
 
             const p = document.createElement('p');
             p.textContent = day.day;
-            document.getElementById('calendar').appendChild(p);
+            document.getElementById('divBook').appendChild(p);
 
             day.times.forEach((time, counterTime) => {
                 // console.log(time.time + ' ' + counterTime);
@@ -85,7 +106,7 @@ let load = (res) => {
 
                 btn.addEventListener('click', functionBtnBook)
 
-                document.getElementById('calendar').appendChild(btn);
+                document.getElementById('divBook').appendChild(btn);
 
                 if (time.booked == true) {
                     btn.disabled = true;
@@ -95,15 +116,19 @@ let load = (res) => {
 
         dataUsers.forEach(element => {
             if (element.email == userLoggedin && element.timeBooked != null) {
-                let elements = document.getElementsByClassName('btnBookClass');
-                for (let i = 0; i < elements.length; i++) {
-                    elements[i].disabled = true;
+
+                let btnBookArray = document.getElementsByClassName('btnBookClass');
+
+                for (let i = 0; i < btnBookArray.length; i++) {
+                    btnBookArray[i].disabled = true;
                 }
+
+                let h3 = document.createElement('h3');
+                h3.textContent = 'You have already booked a time. You need to first cancel your previous booking';
+                document.getElementById('divBook').prepend(h3);
             }
         });
     }
-
-
 }
 
 const functionBtnBook = (event) => {
@@ -111,9 +136,9 @@ const functionBtnBook = (event) => {
     document.getElementById('btnCancelId').disabled = false;
     document.getElementById('btnConfirmId').disabled = false;
 
-    let elements = document.getElementsByClassName('btnBookClass');
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].disabled = true;
+    let btnBookArray = document.getElementsByClassName('btnBookClass');
+    for (let i = 0; i < btnBookArray.length; i++) {
+        btnBookArray[i].disabled = true;
     }
 
     const id = event.target.id.split(',');
@@ -175,9 +200,9 @@ const functionBtnCancel = () => {
     document.getElementById('btnCancelId').disabled = true;
     document.getElementById('btnConfirmId').disabled = true;
 
-    let elements = document.getElementsByClassName('btnBookClass');
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].disabled = false;
+    let btnBookArray = document.getElementsByClassName('btnBookClass');
+    for (let i = 0; i < btnBookArray.length; i++) {
+        btnBookArray[i].disabled = false;
     }
 
     dataCurrentWeek.forEach(day => {
@@ -205,8 +230,11 @@ const functionBtnCancel = () => {
 
             }
         });
-
     });
+}
+
+const functionBtnCancelBooking = () => {
+    console.log('This is functionBtnCancelBooking')
 }
 
 const functionBtnSignOut = () => {
