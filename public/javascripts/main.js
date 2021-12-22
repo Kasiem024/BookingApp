@@ -97,6 +97,11 @@ const functionBtnBook = (event) => {
     document.getElementById('btnCancelId').disabled = false;
     document.getElementById('btnConfirmId').disabled = false;
 
+    let elements = document.getElementsByClassName('btnBookClass');
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].disabled = true;
+    }
+
     const id = event.target.id.split(',');
 
     let btnDay = id[0];
@@ -117,7 +122,7 @@ const functionBtnBook = (event) => {
                         if (user.email == userLoggedin) {
                             if (user.timeBooked == null) {
                                 console.log('1');
-                                user.timeBooked1 = event.target.id;
+                                user.timeBooked = event.target.id;
                                 time.bookedBy = userLoggedin;
 
                             } else {
@@ -143,6 +148,45 @@ const functionBtnConfirm = () => {
 
 const functionBtnCancel = () => {
     console.log('This is cancel');
+
+    document.getElementById('btnCancelId').disabled = true;
+    document.getElementById('btnConfirmId').disabled = true;
+
+    let elements = document.getElementsByClassName('btnBookClass');
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].disabled = false;
+    }
+
+    dataCurrentWeek.forEach(day => {
+
+        day.times.forEach(time => {
+
+            if (time.time != '') {
+
+                dataUsers.forEach(user => {
+                    if (user.email == userLoggedin) {
+                        if (user.timeBooked != null) {
+                            console.log('1');
+                            user.timeBooked = null;
+                            time.bookedBy = '';
+
+                        } else {
+                            console.log('2');
+                            document.getElementById('btnCancelId').disabled = true;
+                            document.getElementById('btnConfirmId').disabled = true;
+                        }
+                        if (time.bookedBy != '') {
+                            time.bookedBy = '';
+                        }
+                    }
+                });
+
+            }
+        });
+
+    });
+    console.log(dataCurrentWeek);
+    console.log(dataUsers);
 }
 
 const functionBtnSignOut = () => {
