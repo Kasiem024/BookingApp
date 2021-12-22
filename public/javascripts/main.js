@@ -124,6 +124,7 @@ const functionBtnBook = (event) => {
                                 console.log('1');
                                 user.timeBooked = event.target.id;
                                 time.bookedBy = userLoggedin;
+                                time.booked = true;
 
                             } else {
                                 console.log('2');
@@ -144,6 +145,24 @@ const functionBtnBook = (event) => {
 
 const functionBtnConfirm = () => {
     console.log('This is confirm');
+
+    fetch('/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataCurrentWeek),
+    }).then(console.log('dataCurrentWeek finished'))
+
+    fetch('/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataUsers),
+    }).then(console.log('dataUsers finished'))
+
+    location.reload();
 }
 
 const functionBtnCancel = () => {
@@ -177,6 +196,7 @@ const functionBtnCancel = () => {
                         }
                         if (time.bookedBy != '') {
                             time.bookedBy = '';
+                            time.booked = false;
                         }
                     }
                 });
