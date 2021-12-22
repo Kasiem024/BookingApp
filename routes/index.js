@@ -10,14 +10,11 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 
     if (req.body[0].fullName == undefined) {
-        console.log('THIS IS CURREENTWEEK')
-        console.log(req.body)
 
         let currentWeekFile = require('../data/currentWeek.json');
 
         currentWeekFile.currentWeek = req.body
 
-        console.log(currentWeekFile.currentWeek[0].times)
 
         const fs = require('fs');
 
@@ -28,14 +25,10 @@ router.post('/', function(req, res, next) {
     }
 
     if (req.body[0].day == undefined) {
-        console.log('THIS IS DATAUSERS')
-        console.log(req.body)
 
         let dataUser = require('../data/users.json');
 
         dataUser.users = req.body
-
-        console.log(dataUser)
 
         const fs = require('fs');
 
@@ -44,6 +37,12 @@ router.post('/', function(req, res, next) {
             console.log('File is created successfully.');
         });
     }
+});
+
+router.get('/showBooking', function(req, res, next) {
+    res.render('showBooking', {
+        title: 'BookingApp'
+    });
 });
 
 router.get('/login', function(req, res, next) {

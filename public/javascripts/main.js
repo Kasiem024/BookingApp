@@ -46,10 +46,6 @@ allData.then((res) => load(res));
 
 let load = (res) => {
 
-    console.log(userLoggedin)
-
-    console.log(res)
-
     dataUsers = res[0].users;
     dataCurrentWeek = res[1].currentWeek;
     dataNextWeek = res[2].nextWeek;
@@ -58,41 +54,59 @@ let load = (res) => {
     console.log(dataCurrentWeek);
     console.log(dataNextWeek);
 
-    dataCurrentWeek.forEach((day, counterDay) => {
-        // console.log(day.day + ' ' + counterDay);
-        // console.log(counterDay);
+    if (location.href.includes('showBooking')) {
+        console.log('This is showBooking page');
 
-        let mybr = document.createElement('br');
-        document.getElementById('calendar').appendChild(mybr);
+    } else {
 
-        const p = document.createElement('p');
-        p.textContent = day.day;
-        document.getElementById('calendar').appendChild(p);
+        console.log('This is index page')
 
-        day.times.forEach((time, counterTime) => {
-            // console.log(time.time + ' ' + counterTime);
-            // console.log(counterTime);
+        dataCurrentWeek.forEach((day, counterDay) => {
+            // console.log(day.day + ' ' + counterDay);
+            // console.log(counterDay);
 
-            const btn = document.createElement('button');
-            btn.textContent = "Book " + time.time;
-            btn.style.width = "80px"
-            btn.style.height = "80px"
-            btn.id = day.day + "," + time.time;
-            btn.className = 'btnBookClass';
+            let mybr = document.createElement('br');
+            document.getElementById('calendar').appendChild(mybr);
 
-            btn.addEventListener('click', functionBtnBook)
+            const p = document.createElement('p');
+            p.textContent = day.day;
+            document.getElementById('calendar').appendChild(p);
 
-            document.getElementById('calendar').appendChild(btn);
+            day.times.forEach((time, counterTime) => {
+                // console.log(time.time + ' ' + counterTime);
+                // console.log(counterTime);
 
-            if (time.booked == true) {
-                btn.disabled = true;
+                const btn = document.createElement('button');
+                btn.textContent = "Book " + time.time;
+                btn.style.width = "80px"
+                btn.style.height = "80px"
+                btn.id = day.day + "," + time.time;
+                btn.className = 'btnBookClass';
+
+                btn.addEventListener('click', functionBtnBook)
+
+                document.getElementById('calendar').appendChild(btn);
+
+                if (time.booked == true) {
+                    btn.disabled = true;
+                }
+            });
+        });
+
+        dataUsers.forEach(element => {
+            if (element.email == userLoggedin && element.timeBooked != null) {
+                let elements = document.getElementsByClassName('btnBookClass');
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].disabled = true;
+                }
             }
         });
-    });
+    }
+
+
 }
 
 const functionBtnBook = (event) => {
-    console.log('This is book ------------------------');
 
     document.getElementById('btnCancelId').disabled = false;
     document.getElementById('btnConfirmId').disabled = false;
@@ -107,9 +121,6 @@ const functionBtnBook = (event) => {
     let btnDay = id[0];
     let btnTime = id[1];
 
-    console.log(btnDay);
-    console.log(btnTime);
-
     dataCurrentWeek.forEach(day => {
 
         if (day.day == btnDay) {
@@ -121,13 +132,11 @@ const functionBtnBook = (event) => {
                     dataUsers.forEach(user => {
                         if (user.email == userLoggedin) {
                             if (user.timeBooked == null) {
-                                console.log('1');
                                 user.timeBooked = event.target.id;
                                 time.bookedBy = userLoggedin;
                                 time.booked = true;
 
                             } else {
-                                console.log('2');
                                 document.getElementById('btnCancelId').disabled = true;
                                 document.getElementById('btnConfirmId').disabled = true;
                             }
@@ -138,13 +147,9 @@ const functionBtnBook = (event) => {
             });
         }
     });
-
-    console.log(dataCurrentWeek);
-    console.log(dataUsers);
 }
 
 const functionBtnConfirm = () => {
-    console.log('This is confirm');
 
     fetch('/', {
         method: 'POST',
@@ -166,7 +171,6 @@ const functionBtnConfirm = () => {
 }
 
 const functionBtnCancel = () => {
-    console.log('This is cancel');
 
     document.getElementById('btnCancelId').disabled = true;
     document.getElementById('btnConfirmId').disabled = true;
@@ -185,12 +189,10 @@ const functionBtnCancel = () => {
                 dataUsers.forEach(user => {
                     if (user.email == userLoggedin) {
                         if (user.timeBooked != null) {
-                            console.log('1');
                             user.timeBooked = null;
                             time.bookedBy = '';
 
                         } else {
-                            console.log('2');
                             document.getElementById('btnCancelId').disabled = true;
                             document.getElementById('btnConfirmId').disabled = true;
                         }
@@ -205,8 +207,6 @@ const functionBtnCancel = () => {
         });
 
     });
-    console.log(dataCurrentWeek);
-    console.log(dataUsers);
 }
 
 const functionBtnSignOut = () => {
