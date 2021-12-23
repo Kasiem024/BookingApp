@@ -4,189 +4,189 @@
         "times": [{
             "time": "07:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "10:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "13:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "16:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "19:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "22:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }]
     }, {
         "day": "Tuesday",
         "times": [{
             "time": "07:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "10:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "13:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "16:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "19:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "22:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }]
     }, {
         "day": "Wednesday",
         "times": [{
             "time": "07:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "10:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "13:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "16:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "19:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "22:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }]
     }, {
         "day": "Thursday",
         "times": [{
             "time": "07:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "10:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "13:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "16:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "19:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "22:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }]
     }, {
         "day": "Friday",
         "times": [{
             "time": "07:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "10:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "13:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "16:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "19:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "22:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }]
     }, {
         "day": "Saturday",
         "times": [{
             "time": "07:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "10:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "13:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "16:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "19:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "22:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }]
     }, {
         "day": "Sunday",
         "times": [{
             "time": "07:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "10:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "13:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "16:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "19:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }, {
             "time": "22:00",
             "booked": false,
-            "bookedBy": ""
+            "bookedBy": null
         }]
     }]
 }
