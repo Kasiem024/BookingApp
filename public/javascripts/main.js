@@ -12,9 +12,9 @@ console.log(document.cookie);
 let userLoggedin;
 
 try {
-    if (document.cookie != '') {
+    if (document.cookie != null) {
 
-        if (document.cookie.split(' ').find(row => row.startsWith('user=')).split('=')[1] == '') {
+        if (document.cookie.split(' ').find(row => row.startsWith('user=')).split('=')[1] == null) {
 
             location.href = '/login';
         } else {
@@ -209,32 +209,53 @@ const functionBtnCancel = () => {
 
         day.times.forEach(time => {
 
-            if (time.time != '') {
+            dataUsers.forEach(user => {
+                if (user.email == userLoggedin) {
+                    if (user.timeBooked != null) {
+                        user.timeBooked = null;
+                        time.bookedBy = null;
+                        time.booked = false;
 
-                dataUsers.forEach(user => {
-                    if (user.email == userLoggedin) {
-                        if (user.timeBooked != null) {
-                            user.timeBooked = null;
-                            time.bookedBy = '';
-
-                        } else {
-                            document.getElementById('btnCancelId').disabled = true;
-                            document.getElementById('btnConfirmId').disabled = true;
-                        }
-                        if (time.bookedBy != '') {
-                            time.bookedBy = '';
-                            time.booked = false;
-                        }
+                    } else {
+                        document.getElementById('btnCancelId').disabled = true;
+                        document.getElementById('btnConfirmId').disabled = true;
                     }
-                });
-
-            }
+                    if (time.bookedBy != null) {
+                        time.bookedBy = null;
+                        time.booked = false;
+                    }
+                }
+            });
         });
     });
+    console.log(dataCurrentWeek[0].times);
+    console.log(dataUsers);
 }
 
 const functionBtnCancelBooking = () => {
-    console.log('This is functionBtnCancelBooking')
+    console.log('This is functionBtnCancelBooking');
+
+    document.getElementById('btnConfirmId').disabled = false;
+
+    dataCurrentWeek.forEach(day => {
+
+        day.times.forEach(time => {
+
+            dataUsers.forEach(user => {
+                if (user.email == userLoggedin) {
+                    if (user.timeBooked != null) {
+                        user.timeBooked = null;
+                        time.bookedBy = null;
+                        time.booked = false;
+
+                    }
+                }
+            });
+        });
+    });
+
+    console.log(dataCurrentWeek[0].times);
+    console.log(dataUsers);
 }
 
 const functionBtnSignOut = () => {
