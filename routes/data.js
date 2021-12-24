@@ -29,4 +29,13 @@ router.get('/nextWeek', function(req, res, next) {
     }
 });
 
+router.get('/nextNextWeek', function(req, res, next) {
+    if (typeof req.headers.referer != 'undefined') {
+        const data = require('../data/nextNextWeek.json');
+        res.send(data);
+    } else {
+        res.send('<h1>Unathourized Access</h1>');
+    }
+});
+
 module.exports = router;
