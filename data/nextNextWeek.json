@@ -11,7 +11,7 @@
             "bookedBy": null
         }, {
             "time": "13:00",
-            "booked": true,
+            "booked": false,
             "bookedBy": null
         }, {
             "time": "16:00",
