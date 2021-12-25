@@ -6,18 +6,28 @@ console.log(document.cookie);
 
 let dataUsers = [];
 
+let months = ['January', 'February', 'Mars', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
+let date = new Date();
+
+let janOne = new Date(date.getFullYear(), 0, 1);
+let numberDays = Math.floor((date - janOne) / (24 * 60 * 60 * 1000));
+let weekNumber = Math.ceil((date.getDay() + 1 + numberDays) / 7);
+
 let pointerWeek = [{
     "weekStatus": true,
     "weekName": "currentWeek",
-    "weekData": null
+    "weekData": null,
+    "weekNumber": weekNumber - 2
 }, {
     "weekStatus": false,
     "weekName": "nextWeek",
-    "weekData": null
+    "weekData": null,
+    "weekNumber": weekNumber - 1
 }, {
     "weekStatus": false,
     "weekName": "nextNextWeek",
-    "weekData": null
+    "weekData": null,
+    "weekNumber": weekNumber
 }];
 
 let userLoggedin;
@@ -72,28 +82,7 @@ let load = (res) => {
     if (location.href.includes('showBooking')) {
         console.log('This is showBooking page');
 
-        pointerWeek.forEach(element => {
-
-            element.weekData.forEach(day => {
-
-                day.times.forEach(time => {
-
-                    if (time.bookedBy == userLoggedin) {
-
-                        const p = document.createElement('p');
-                        p.textContent = 'You have booked on ' + day.day + ' at ' + time.time + ' in ' + element.weekName;
-                        document.getElementById('divShowBooking').appendChild(p);
-
-                        const btn = document.createElement('button');
-                        btn.textContent = 'Cancel this booking';
-                        btn.id = day.day + "," + time.time + ',' + element.weekName;
-                        btn.className = 'btnCancelBookingClass';
-                        btn.addEventListener('click', functionBtnCancelBooking)
-                        document.getElementById('divShowBooking').appendChild(btn);
-                    }
-                });
-            })
-        });
+        functionShowBooking();
 
     } else {
         console.log('This is index page');
@@ -108,6 +97,10 @@ const functionPrintWeeks = () => {
 
     pointerWeek.forEach(element => {
         if (element.weekStatus == true) {
+
+            const h3 = document.createElement('h3');
+            h3.textContent = 'Week ' + element.weekNumber;
+            document.getElementById('divBook').appendChild(h3);
 
             element.weekData.forEach(day => {
 
@@ -133,6 +126,7 @@ const functionPrintWeeks = () => {
 
                     if (time.booked == true) {
                         btn.disabled = true;
+                        btn.textContent = 'Booked ' + time.time;
                         btn.classList.add('booked');
                     }
                 });
@@ -319,6 +313,32 @@ const functionBtnPreviousWeek = () => {
 
         functionPrintWeeks();
     }
+}
+
+const functionShowBooking = () => {
+
+    pointerWeek.forEach(element => {
+
+        element.weekData.forEach(day => {
+
+            day.times.forEach(time => {
+
+                if (time.bookedBy == userLoggedin) {
+
+                    const p = document.createElement('p');
+                    p.textContent = 'You have booked on ' + day.day + ' at ' + time.time + ' in week ' + element.weekNumber;
+                    document.getElementById('divShowBooking').appendChild(p);
+
+                    const btn = document.createElement('button');
+                    btn.textContent = 'Cancel this booking';
+                    btn.id = day.day + "," + time.time + ',' + element.weekName;
+                    btn.className = 'btnCancelBookingClass';
+                    btn.addEventListener('click', functionBtnCancelBooking)
+                    document.getElementById('divShowBooking').appendChild(btn);
+                }
+            });
+        })
+    });
 }
 
 const functionBtnCancelBooking = (event) => {
