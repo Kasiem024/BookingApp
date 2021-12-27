@@ -6,28 +6,31 @@ console.log(document.cookie);
 
 let dataUsers = [];
 
-let months = ['January', 'February', 'Mars', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
+let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 let date = new Date();
 
 let janOne = new Date(date.getFullYear(), 0, 1);
 let numberDays = Math.floor((date - janOne) / (24 * 60 * 60 * 1000));
 let weekNumber = Math.ceil((date.getDay() + 1 + numberDays) / 7);
 
+console.log(weekNumber)
+
 let pointerWeek = [{
     "weekStatus": true,
     "weekName": "currentWeek",
     "weekData": null,
-    "weekNumber": weekNumber - 2
+    "weekNumber": weekNumber
 }, {
     "weekStatus": false,
     "weekName": "nextWeek",
     "weekData": null,
-    "weekNumber": weekNumber - 1
+    "weekNumber": weekNumber + 1
 }, {
     "weekStatus": false,
     "weekName": "nextNextWeek",
     "weekData": null,
-    "weekNumber": weekNumber
+    "weekNumber": weekNumber + 2
 }];
 
 let userLoggedin;
@@ -213,7 +216,7 @@ const functionBtnConfirm = () => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(pointerWeek),
-    }).then(console.log('dataCurrentWeek finished'));
+    }).then(console.log('pointerWeek finished'));
 
     location.reload();
 }
