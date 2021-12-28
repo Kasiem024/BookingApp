@@ -7,14 +7,12 @@ console.log(document.cookie);
 let dataUsers = [];
 
 let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+let days = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 let date = new Date();
 
 let janOne = new Date(date.getFullYear(), 0, 1);
 let numberDays = Math.floor((date - janOne) / (24 * 60 * 60 * 1000));
 let weekNumber = Math.ceil((date.getDay() + 1 + numberDays) / 7);
-
-console.log(weekNumber)
 
 let pointerWeek = [{
     "weekStatus": true,
@@ -127,9 +125,25 @@ const functionPrintWeeks = () => {
 
                     document.getElementById('divBook').appendChild(btn);
 
+                    const hour = time.time.split(':')
+
+                    days.forEach((element, counter) => {
+                        if (day.day == days[counter]) {
+                            if (counter < days.indexOf(days[date.getDay()])) {
+                                btn.disabled = true;
+                            }
+                        }
+                    });
+
+                    if (day.day == days[date.getDay()]) {
+                        if (parseInt(hour[0]) <= date.getHours()) {
+                            btn.disabled = true;
+                        }
+                    }
+
                     if (time.booked == true) {
                         btn.disabled = true;
-                        btn.textContent = 'Booked ' + time.time;
+                        btn.textContent = 'Already booked ' + time.time;
                         btn.classList.add('booked');
                     }
                 });
@@ -270,12 +284,10 @@ const functionBtnCancel = () => {
 }
 
 const functionBtnNextWeek = () => {
-    console.log('This is functionBtnNextWeek');
 
     document.getElementById('btnPreviousWeekId').disabled = false;
 
     if (pointerWeek[0].weekStatus == true) {
-        console.log('currentweek')
 
         pointerWeek[0].weekStatus = false;
         pointerWeek[1].weekStatus = true;
@@ -283,7 +295,6 @@ const functionBtnNextWeek = () => {
         functionPrintWeeks();
     } else
     if (pointerWeek[1].weekStatus == true) {
-        console.log('nextweek')
 
         pointerWeek[1].weekStatus = false;
         pointerWeek[2].weekStatus = true;
@@ -291,16 +302,13 @@ const functionBtnNextWeek = () => {
 
         functionPrintWeeks();
     }
-    console.log(pointerWeek);
 }
 
 const functionBtnPreviousWeek = () => {
-    console.log('This is functionBtnPreviousWeek');
 
     document.getElementById('btnNextWeekId').disabled = false;
 
     if (pointerWeek[1].weekStatus == true) {
-        console.log('nextweek')
 
         pointerWeek[1].weekStatus = false;
         pointerWeek[0].weekStatus = true;
@@ -309,7 +317,6 @@ const functionBtnPreviousWeek = () => {
         functionPrintWeeks();
     } else
     if (pointerWeek[2].weekStatus == true) {
-        console.log('nextnextweek')
 
         pointerWeek[2].weekStatus = false;
         pointerWeek[1].weekStatus = true;
