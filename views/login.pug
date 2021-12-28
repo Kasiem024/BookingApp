@@ -3,41 +3,46 @@ extends layout
 block content
   script(src="/javascripts/login.js") 
   h1= title
-  p Login
-  #divLogin
+  #divLogin.container
+    h2 Login
+
     form(method='dialog' autocomplete='on')
-      label(for='email')
-        p Email
-      input(type='email' placeholder='Enter Email' name='email' id="tBoxLoginEmail" autocomplete='email' required)
-      label(for='current-password')
-        p Password
-      input(type='password' placeholder='Enter Password' name='current-password' id="tBoxLoginPassword" autocomplete='current-password' required)
-      p#errorMessageLogin
-      button(type='submit' onclick='functionLogin()') Login
+      .row
+        .form-outline
+        label(for='email' class='form-label') Email
+        input(type='email' placeholder='Enter Email' name='email' id="tBoxLoginEmail" class='form-control' autocomplete='email' required)
 
-      br
-      br
+        .form-outline
+        label(for='current-password' class='form-label') Password
+        input(type='password' placeholder='Enter Password' name='current-password' id="tBoxLoginPassword" class='form-control' autocomplete='current-password' required)
 
-      button(type='button' onclick='functionShowCreateAccount()') Create account
+      p#errorMessageLogin.text-danger
 
-  #divCreateAccount(style="display:none;")
+      button(type='submit' class='btn btn-primary btn-block' onclick='functionLogin()') Login
+      button(type='button' class='btn btn-primary btn-block' onclick='functionShowCreateAccount()') Don't Have an Account?
+
+  #divCreateAccount.container(style="display:none;")
+    h2 Sign Up
+
     form(method='dialog' autocomplete='on')
-      h2 Sign Up
-      hr
-      label(for='name')
-        p Full Name
-      input(type='text' placeholder='Enter Full Name' name='name' id="tBoxFullName" autocomplete='name' required)
-      label(for='email')
-        p Email
-      input(type='email' placeholder='Enter Email' name='email' id="tBoxCreateEmail" autocomplete='email' required)
-      label(for='new-password')
-        p Password
-      input(type='password' placeholder='Enter Password' name='password' id="tBoxCreatePassword" autocomplete='new-password' required title='Password must be at least 6 characters which contain at least one number, one uppercase and one lowercase letter')
-      label(for='repeat-password')
-        p Repeat Password
-      input(type='password' placeholder='Repeat Password' name='repeat-password' id="tBoxRepeatPassword" autocomplete='new-password' required)
-      p#errorMessageCreate
-      br
-      br
-      button(type='button' onclick='functionCancelCreateAccount()') Cancel
-      button(type='submit' onclick='functionCreateAccount()') Create Account
+      .row
+        .form-outline
+          label(for='name' class='form-label') Full Name
+          input(type='text' name='name' id="tBoxFullName" placeholder='Enter Full Name' class='form-control' autocomplete='name' required)
+
+        .form-outline
+          label(for='email' class='form-label') Email
+          input(type='email' placeholder='Enter Email' name='email' id="tBoxCreateEmail" class='form-control' autocomplete='email' required)
+
+        .form-outline
+          label(for='new-password' class='form-label') Password
+          input(type='password' placeholder='Enter Password' name='password' id="tBoxCreatePassword" class='form-control' autocomplete='new-password' required title='Password must be at least 6 characters which contain at least one number, one uppercase and one lowercase letter')
+        
+        .form-outline
+          label(for='repeat-password' class='form-label') Repeat Password
+          input(type='password' placeholder='Repeat Password' name='repeat-password' id="tBoxRepeatPassword" class='form-control' autocomplete='new-password' required)
+
+        p#errorMessageCreate.text-danger
+
+        button(type='submit' class='btn btn-primary btn-block' onclick='functionCreateAccount()') Create Account
+        button(type='button' class='btn btn-primary btn-block' onclick='functionCancelCreateAccount()') Cancel
