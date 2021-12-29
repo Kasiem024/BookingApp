@@ -7,7 +7,7 @@ console.log(document.cookie);
 let dataUsers = [];
 
 let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-let days = [null, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 let date = new Date();
 
 let janOne = new Date(date.getFullYear(), 0, 1);
