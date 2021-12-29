@@ -2,19 +2,22 @@ extends layout
 
 block content
   script(src="/javascripts/main.js") 
-  h1= title
-  p Welcome to #{title}
-  #container
+  #container.container
+    h1= title  
     h2 What time do you want to book?
-    button#btnConfirmId(onclick='functionBtnConfirm()' disabled) Confirm
-    button#btnCancelId(onclick='functionBtnCancel()' disabled) Cancel
-    br
-    br
-    button#btnPreviousWeekId(onclick='functionBtnPreviousWeek()' disabled) Previous Week
-    button#btnNextWeekId(onclick='functionBtnNextWeek()') Next Week
-    br
-    br
-    a(href="/showBooking") Show Booking    
-    button#btnSignOutId(onclick='functionBtnSignOut()') Signout
-    #divBook
-
+    .row.py-3
+      .col.col-auto.col-md-6.col-sm-12
+        button#btnConfirmId(onclick='functionBtnConfirm()' class='btn btn-primary mx-3' disabled) Confirm
+      .col.col-auto.col-md-6.col-sm-12
+        button#btnCancelId(onclick='functionBtnCancel()' class='btn btn-primary mx-3' disabled) Cancel
+    .row.py-3
+      .col.col-auto.col-md-6.col-sm-12
+        button#btnPreviousWeekId(onclick='functionBtnPreviousWeek()' class='btn btn-primary mx-3' disabled) Previous Week
+      .col.col-auto.col-md-6.col-sm-12
+        button#btnNextWeekId(onclick='functionBtnNextWeek()' class='btn btn-primary mx-3') Next Week
+    .row.py-3
+      .col.col-auto.col-md-6.col-sm-12
+        a(href="/showBooking") Show Booking
+      .col.col-auto.col-md-6.col-sm-12
+        button#btnSignOutId(onclick='functionBtnSignOut()' class='btn btn-primary mx-2') Signout
+  #divBook.container-fluid
