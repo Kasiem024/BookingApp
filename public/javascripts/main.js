@@ -81,14 +81,14 @@ const functionPrintWeeks = () => {
 
     document.getElementById('divBook').innerHTML = null;
 
-    pointerWeek.forEach(element => {
-        if (element.weekStatus == true) {
+    pointerWeek.forEach(week => {
+        if (week.weekStatus == true) {
 
             const h3 = document.createElement('h3');
-            h3.textContent = 'Week ' + element.weekNumber;
+            h3.textContent = 'Week ' + week.weekNumber;
             document.getElementById('divBook').appendChild(h3);
 
-            element.weekData.forEach(day => {
+            week.weekData.forEach((day, counterDay) => {
 
                 let mybr = document.createElement('br');
                 document.getElementById('divBook').appendChild(mybr);
@@ -103,7 +103,7 @@ const functionPrintWeeks = () => {
                     btn.textContent = "Book " + time.time;
                     btn.style.width = "80px";
                     btn.style.height = "80px";
-                    btn.id = day.day + "," + time.time + "," + element.weekName;
+                    btn.id = day.day + "," + time.time + "," + week.weekName;
                     btn.className = 'btnBookClass';
 
                     btn.addEventListener('click', functionBtnBook);
@@ -112,19 +112,27 @@ const functionPrintWeeks = () => {
 
                     const hour = time.time.split(':')
 
+                    if (day.day == days[date.getDay()]) {
+                        if (parseInt(hour[0]) <= date.getHours() && week.weekName == 'week0') {
+                            btn.disabled = true;
+                        }
+                    }
+
                     days.forEach((element, counter) => {
                         if (day.day == days[counter]) {
-                            if (counter < days.indexOf(days[date.getDay()])) {
+                            if (counter < days.indexOf(days[date.getDay()]) && week.weekName == 'week0') {
                                 btn.disabled = true;
                             }
                         }
                     });
 
-                    if (day.day == days[date.getDay()]) {
-                        if (parseInt(hour[0]) <= date.getHours()) {
-                            btn.disabled = true;
-                        }
-                    }
+                    // let btnDate = new Date();
+
+                    // let numberWeek = week.weekName.replace(/^\D+/g, '');
+
+                    // btnDate.setDate(date.getDate() + (counterDay + (numberWeek * 7)));
+
+                    // console.log(btnDate);
 
                     if (time.booked == true) {
                         btn.disabled = true;
