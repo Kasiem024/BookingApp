@@ -103,7 +103,7 @@ const functionPrintWeeks = () => {
                     btn.textContent = "Book " + time.time;
                     btn.style.width = "80px";
                     btn.style.height = "80px";
-                    btn.id = day.day + "," + time.time;
+                    btn.id = day.day + "," + time.time + "," + element.weekName;
                     btn.className = 'btnBookClass';
 
                     btn.addEventListener('click', functionBtnBook);
@@ -131,6 +131,13 @@ const functionPrintWeeks = () => {
                         btn.textContent = 'Already booked ' + time.time;
                         btn.classList.add('booked');
                     }
+
+                    if (time.bookedBy == userLoggedin) {
+                        btn.removeEventListener('click', functionBtnBook);
+                        btn.addEventListener('click', functionBtnCancelBooking);
+                        btn.textContent = 'You have booked this time ' + time.time;
+                        btn.classList.add('bookedByUser');
+                    }
                 });
             });
         }
@@ -143,6 +150,9 @@ const functionPrintWeeks = () => {
 
             for (let i = 0; i < btnBookArray.length; i++) {
                 btnBookArray[i].disabled = true;
+                if (btnBookArray[i].className.includes('bookedByUser')) {
+                    btnBookArray[i].disabled = false;
+                }
             }
 
             let h3 = document.createElement('h3');
@@ -328,7 +338,7 @@ const functionShowBooking = () => {
 
                     const btn = document.createElement('button');
                     btn.textContent = 'Cancel this booking';
-                    btn.id = day.day + "," + time.time + ',' + element.weekName;
+                    btn.id = day.day + "," + time.time + "," + element.weekName;
                     btn.className = 'btnCancelBookingClass';
                     btn.addEventListener('click', functionBtnCancelBooking)
                     document.getElementById('divShowBooking').appendChild(btn);
@@ -339,8 +349,6 @@ const functionShowBooking = () => {
 }
 
 const functionBtnCancelBooking = (event) => {
-
-    document.getElementById('btnConfirmId').disabled = false;
 
     const id = event.target.id.split(',');
 
@@ -358,7 +366,7 @@ const functionBtnCancelBooking = (event) => {
 
                     day.times.forEach(time => {
 
-                        if (time.time == btnTime) {
+                        if (time.time == btnTime && time.bookedBy == userLoggedin) {
 
                             dataUsers.forEach(user => {
 
@@ -376,6 +384,12 @@ const functionBtnCancelBooking = (event) => {
             });
         }
     });
+
+    document.getElementById('btnConfirmId').disabled = false;
+    // document.getElementById('btnCancelId').disabled = false;
+    document.getElementById('btnPreviousWeekId').disabled = true;
+    document.getElementById('btnNextWeekId').disabled = true;
+
 }
 
 const functionBtnSignOut = () => {
