@@ -14,22 +14,7 @@ let janOne = new Date(date.getFullYear(), 0, 1);
 let numberDays = Math.floor((date - janOne) / (24 * 60 * 60 * 1000));
 let weekNumber = Math.ceil((date.getDay() + 1 + numberDays) / 7);
 
-let pointerWeek = [{
-    "weekStatus": true,
-    "weekName": "currentWeek",
-    "weekData": null,
-    "weekNumber": weekNumber
-}, {
-    "weekStatus": false,
-    "weekName": "nextWeek",
-    "weekData": null,
-    "weekNumber": weekNumber + 1
-}, {
-    "weekStatus": false,
-    "weekName": "nextNextWeek",
-    "weekData": null,
-    "weekNumber": weekNumber + 2
-}];
+let pointerWeek = [];
 
 let userLoggedin;
 
@@ -58,24 +43,24 @@ const fetchCurrentWeekInfo = fetch(
     '/data/currentWeek'
 ).then((res) => res.json());
 
-const fetchNextWeekInfo = fetch(
-    '/data/nextWeek'
-).then((res) => res.json());
-
-const fetchNextNextWeekInfo = fetch(
-    '/data/nextNextWeek'
-).then((res) => res.json());
-
-const allData = Promise.all([fetchUsersInfo, fetchCurrentWeekInfo, fetchNextWeekInfo, fetchNextNextWeekInfo]);
+const allData = Promise.all([fetchUsersInfo, fetchCurrentWeekInfo]);
 
 allData.then((res) => load(res));
 
 let load = (res) => {
 
     dataUsers = res[0].users;
-    pointerWeek[0].weekData = res[1].currentWeek;
-    pointerWeek[1].weekData = res[2].nextWeek;
-    pointerWeek[2].weekData = res[3].nextNextWeek;
+
+    res[1].weeks.forEach((element, counter) => {
+        pointerWeek.push({
+            "weekStatus": false,
+            "weekName": element.weekName,
+            "weekData": element.weekData,
+            "weekNumber": weekNumber + counter
+        })
+    });
+
+    pointerWeek[0].weekStatus = true;
 
     console.log(dataUsers);
     console.log(pointerWeek);
@@ -281,6 +266,8 @@ const functionBtnCancel = () => {
         document.getElementById('btnPreviousWeekId').disabled = false;
         document.getElementById('btnNextWeekId').disabled = false;
     }
+
+    functionPrintWeeks();
 }
 
 const functionBtnNextWeek = () => {
