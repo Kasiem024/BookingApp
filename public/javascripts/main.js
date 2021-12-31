@@ -292,26 +292,43 @@ const functionBtnNextWeek = () => {
 
     document.getElementById('btnPreviousWeekId').disabled = false;
 
-    if (pointerWeek[0].weekStatus == true) {
+    let tempArray = [];
 
-        pointerWeek[0].weekStatus = false;
-        pointerWeek[1].weekStatus = true;
+    pointerWeek.forEach(element => {
+        tempArray.push(element.weekStatus)
+    });
 
-        functionPrintWeeks();
-    } else
-    if (pointerWeek[1].weekStatus == true) {
+    const weekTrue = tempArray.indexOf(true);
 
-        pointerWeek[1].weekStatus = false;
-        pointerWeek[2].weekStatus = true;
+    if (pointerWeek[pointerWeek.length - 2].weekStatus == true) {
+
+        pointerWeek[pointerWeek.length - 2].weekStatus = false;
+        pointerWeek[pointerWeek.length - 1].weekStatus = true;
         document.getElementById('btnNextWeekId').disabled = true;
 
-        functionPrintWeeks();
+    } else if (pointerWeek[pointerWeek.length - 1].weekStatus == true) {
+        // Nothing should happen
+
+    } else {
+
+        pointerWeek[weekTrue].weekStatus = false;
+        pointerWeek[weekTrue + 1].weekStatus = true;
     }
+
+    functionPrintWeeks();
 }
 
 const functionBtnPreviousWeek = () => {
 
     document.getElementById('btnNextWeekId').disabled = false;
+
+    let tempArray = [];
+
+    pointerWeek.forEach(element => {
+        tempArray.push(element.weekStatus)
+    });
+
+    const weekTrue = tempArray.indexOf(true);
 
     if (pointerWeek[1].weekStatus == true) {
 
@@ -319,15 +336,16 @@ const functionBtnPreviousWeek = () => {
         pointerWeek[0].weekStatus = true;
         document.getElementById('btnPreviousWeekId').disabled = true;
 
-        functionPrintWeeks();
-    } else
-    if (pointerWeek[2].weekStatus == true) {
+    } else if (pointerWeek[0].weekStatus == true) {
+        // Nothing should happen
 
-        pointerWeek[2].weekStatus = false;
-        pointerWeek[1].weekStatus = true;
+    } else {
 
-        functionPrintWeeks();
+        pointerWeek[weekTrue].weekStatus = false;
+        pointerWeek[weekTrue - 1].weekStatus = true;
     }
+
+    functionPrintWeeks();
 }
 
 const functionShowBooking = () => {
