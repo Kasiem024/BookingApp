@@ -33,15 +33,17 @@ const load = (res) => {
 const functionLogin = () => {
     console.log('functionLogin');
 
-    const email = document.getElementById('tBoxLoginEmail').value;
-    const password = document.getElementById('tBoxLoginPassword').value;
+    let email = document.getElementById('tBoxLoginEmail').value;
+    let password = document.getElementById('tBoxLoginPassword').value;
+
+    email = objectHash.sha1(email);
+    password = objectHash.sha1(password);
 
     let error = document.getElementById('errorMessageLogin');
     error.innerHTML = null;
 
     let findEmail = dataUsers.find(element => element.email == email);
     let findPassword = dataUsers.find(element => element.password == password);
-
 
     if (findEmail != undefined && findPassword != undefined) {
         document.cookie = 'user=' + email;

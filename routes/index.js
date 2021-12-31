@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var hash = require('object-hash');
 
 router.get('/', function(req, res, next) {
     res.render('index', {
@@ -65,9 +66,9 @@ router.post('/login', function(req, res, next) {
     let dataUser = require('../data/users.json');
 
     dataUser.users.push({
-        "name": req.body.fullName,
-        "email": req.body.email,
-        "password": req.body.password,
+        "name": hash(req.body.fullName),
+        "email": hash(req.body.email),
+        "password": hash(req.body.password),
         "weekBooked": null,
         "timeBooked": null,
     })

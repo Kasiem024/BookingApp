@@ -1,13 +1,13 @@
 {
     "users": [{
-        "fullName": "Kasiem Saeed",
-        "email": "kasiemsaeed@gmail.com",
-        "password": "kasiem123",
-        "weekBooked": null,
-        "timeBooked": null
-    }, {
         "fullName": "admin",
         "email": "admin",
         "password": "admin123"
+    }, {
+        "name": "6f7498131b6d20831f4d1471b417a0ea034fbe06",
+        "email": "48ff154325a0d705f9bcbfac866d7bf639f1d5d1",
+        "password": "63d7f60c56948e562971e65da79f0e7529ce40b3",
+        "weekBooked": null,
+        "timeBooked": null
     }]
 }
