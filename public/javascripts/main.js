@@ -217,6 +217,7 @@ const functionBtnBook = (event) => {
                                             booking.dayBooked = btnDay;
                                             booking.timeBooked = btnTime;
                                             booking.currentBooking = true;
+
                                             time.bookedBy = userLoggedin;
                                             time.booked = true;
 
@@ -287,6 +288,7 @@ const functionBtnCancel = () => {
                                     booking.dayBooked = null;
                                     booking.timeBooked = null;
                                     booking.currentBooking = false;
+
                                     time.bookedBy = null;
                                     time.booked = false;
                                 }
@@ -424,14 +426,13 @@ const functionBtnCancelBooking = (event) => {
                                 if (user.email == userLoggedin) {
 
                                     user.bookings.forEach(booking => {
-                                        if (booking.currentBooking == true) {
-
+                                        if (booking.bookedInfo == event.target.id) {
                                             booking.booked = false;
                                             booking.bookedInfo = null;
                                             booking.weekBooked = null;
                                             booking.dayBooked = null;
                                             booking.timeBooked = null;
-                                            booking.currentBooking = false;
+
                                             time.bookedBy = null;
                                             time.booked = false;
                                         }
