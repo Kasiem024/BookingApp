@@ -72,7 +72,7 @@ router.post('/login', function(req, res, next) {
 
     dataUser.users.push({
         "name": hash(req.body.fullName),
-        "email": hash(req.body.email),
+        "email": req.body.email,
         "password": hash(req.body.password),
         "bookings": [{
             "booked": false,

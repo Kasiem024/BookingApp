@@ -14,9 +14,7 @@ try {
             location.href = '/';
         }
     }
-} catch (error) {
-    console.log(error);
-}
+} catch (error) {}
 
 const fetchUsersInfo = fetch(
     '/data/users'
@@ -31,7 +29,6 @@ const load = (res) => {
 }
 
 const functionLogin = () => {
-    console.log('functionLogin');
 
     let email = document.getElementById('tBoxLoginEmail').value;
     let password = document.getElementById('tBoxLoginPassword').value;
@@ -60,24 +57,23 @@ const functionLogin = () => {
 }
 
 const functionShowCreateAccount = () => {
-    console.log('functionShowCreateAccount');
+
     document.getElementById('divLogin').style.display = 'none';
     document.getElementById('divCreateAccount').style.display = 'block';
 }
 const functionCancelCreateAccount = () => {
-    console.log('functionCancelCreateAccount');
+
     document.getElementById('divLogin').style.display = 'block';
     document.getElementById('divCreateAccount').style.display = 'none';
 }
 
 const functionCreateAccount = () => {
-    console.log('functionCreateAccount');
 
     let error = document.getElementById('errorMessageCreate');
     error.innerHTML = null;
 
     const fullName = document.getElementById('tBoxFullName').value;
-    const email = document.getElementById('tBoxCreateEmail').value;
+    let email = document.getElementById('tBoxCreateEmail').value;
     const password = document.getElementById('tBoxCreatePassword').value;
     const repeatPassword = document.getElementById('tBoxRepeatPassword').value;
 
@@ -88,10 +84,11 @@ const functionCreateAccount = () => {
     let counterCorrect = 0;
 
     if (email != '' && email.match(validEmail)) {
+        email = objectHash.sha1(email);
+
         let findEmail = dataUsers.find(element => element.email == email);
 
         if (findEmail == undefined) {
-            console.log('Correct email');
             counterCorrect++;
 
         } else if (findEmail.email != undefined) {
@@ -101,19 +98,17 @@ const functionCreateAccount = () => {
 
     if (password.match(validPassword) && password == repeatPassword) {
 
-        console.log('Correct password');
         counterCorrect++;
 
     } else {
-        console.log('Incorrect password');
         error.innerHTML += 'Incorrect password <br> Password must be at least 6 characters which contain at least one number, one uppercase and one lowercase letter';
     }
 
     if (counterCorrect == 2) {
         const dataUser = {
-            fullName: fullName,
-            email: email,
-            password: password
+            "fullName": fullName,
+            "email": email,
+            "password": password
         };
 
         fetch('login', {
