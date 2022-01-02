@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var router = express.Router();
 var hash = require('object-hash');
@@ -12,6 +13,12 @@ router.post('/', function(req, res, next) {
 
     if (req.body[0].fullName != undefined) {
         let usersFile = require('../data/users.json');
+
+        req.body.forEach(user => {
+            user.bookings.forEach(booking => {
+                booking.currentBooking = false;
+            });
+        });
 
         usersFile.users = req.body
 
@@ -36,8 +43,6 @@ router.post('/', function(req, res, next) {
                 }
             });
         });
-
-        console.log(weekFile)
 
         const fs = require('fs');
 
@@ -69,8 +74,21 @@ router.post('/login', function(req, res, next) {
         "name": hash(req.body.fullName),
         "email": hash(req.body.email),
         "password": hash(req.body.password),
-        "weekBooked": null,
-        "timeBooked": null,
+        "bookings": [{
+            "booked": false,
+            "bookedInfo": null,
+            "weekBooked": null,
+            "dayBooked": null,
+            "timeBooked": null,
+            "currentBooking": false
+        }, {
+            "booked": false,
+            "bookedInfo": null,
+            "weekBooked": null,
+            "dayBooked": null,
+            "timeBooked": null,
+            "currentBooking": false
+        }]
     })
 
     const fs = require('fs');

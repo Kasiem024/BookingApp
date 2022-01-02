@@ -66,13 +66,10 @@ let load = (res) => {
     console.log(pointerWeek);
 
     if (location.href.includes('showBooking')) {
-        console.log('This is showBooking page');
 
         functionShowBooking();
 
     } else {
-        console.log('This is index page');
-
         functionPrintWeeks();
     }
 }
@@ -151,21 +148,31 @@ const functionPrintWeeks = () => {
         }
     });
 
-    dataUsers.forEach(element => {
-        if (element.email == userLoggedin && element.timeBooked != null) {
+    dataUsers.forEach(user => {
 
-            let btnBookArray = document.getElementsByClassName('btnBookClass');
+        if (user.email == userLoggedin) {
+            let counterBooking = 0;
 
-            for (let i = 0; i < btnBookArray.length; i++) {
-                btnBookArray[i].disabled = true;
-                if (btnBookArray[i].className.includes('bookedByUser')) {
-                    btnBookArray[i].disabled = false;
+            user.bookings.forEach(booking => {
+                if (booking.booked == true) {
+                    counterBooking++;
+
                 }
-            }
+                if (counterBooking == dataUsers[0].bookings.length) {
+                    let btnBookArray = document.getElementsByClassName('btnBookClass');
 
-            let h3 = document.createElement('h3');
-            h3.textContent = 'You have already booked a time. You need to first cancel your previous booking';
-            document.getElementById('divBook').prepend(h3);
+                    for (let i = 0; i < btnBookArray.length; i++) {
+                        btnBookArray[i].disabled = true;
+                        if (btnBookArray[i].className.includes('bookedByUser')) {
+                            btnBookArray[i].disabled = false;
+                        }
+                    }
+
+                    let h3 = document.createElement('h3');
+                    h3.textContent = 'You have already booked a time. You need to first cancel your previous booking';
+                    document.getElementById('divBook').prepend(h3);
+                }
+            });
         }
     });
 }
@@ -186,27 +193,36 @@ const functionBtnBook = (event) => {
 
     let btnDay = id[0];
     let btnTime = id[1];
+    let btnWeek = id[2];
 
-    pointerWeek.forEach(element => {
+    pointerWeek.forEach(week => {
+        if (week.weekStatus == true) {
 
-        if (element.weekStatus == true) {
-
-            element.weekData.forEach(day => {
-
+            week.weekData.forEach(day => {
                 if (day.day == btnDay) {
 
                     day.times.forEach(time => {
-
                         if (time.time == btnTime) {
 
                             dataUsers.forEach(user => {
-
                                 if (user.email == userLoggedin) {
+                                    let counterBooking = 0;
 
-                                    user.timeBooked = event.target.id;
-                                    user.weekBooked = element.weekName;
-                                    time.bookedBy = userLoggedin;
-                                    time.booked = true;
+                                    user.bookings.forEach(booking => {
+                                        if (booking.booked == false && counterBooking == 0) {
+
+                                            booking.booked = true;
+                                            booking.bookedInfo = event.target.id;
+                                            booking.weekBooked = btnWeek;
+                                            booking.dayBooked = btnDay;
+                                            booking.timeBooked = btnTime;
+                                            booking.currentBooking = true;
+                                            time.bookedBy = userLoggedin;
+                                            time.booked = true;
+
+                                            counterBooking++;
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -251,21 +267,30 @@ const functionBtnCancel = () => {
         }
     }
 
-    pointerWeek.forEach(element => {
+    pointerWeek.forEach(week => {
 
-        if (element.weekStatus == true) {
+        if (week.weekStatus == true) {
 
-            element.weekData.forEach(day => {
+            week.weekData.forEach(day => {
 
                 day.times.forEach(time => {
 
                     dataUsers.forEach(user => {
                         if (time.bookedBy == user.email) {
 
-                            user.timeBooked = null;
-                            user.weekBooked = null;
-                            time.bookedBy = null;
-                            time.booked = false;
+                            user.bookings.forEach(booking => {
+                                if (booking.currentBooking == true) {
+
+                                    booking.booked = false;
+                                    booking.bookedInfo = null;
+                                    booking.weekBooked = null;
+                                    booking.dayBooked = null;
+                                    booking.timeBooked = null;
+                                    booking.currentBooking = false;
+                                    time.bookedBy = null;
+                                    time.booked = false;
+                                }
+                            });
                         }
                     });
                 });
@@ -294,8 +319,8 @@ const functionBtnNextWeek = () => {
 
     let tempArray = [];
 
-    pointerWeek.forEach(element => {
-        tempArray.push(element.weekStatus)
+    pointerWeek.forEach(week => {
+        tempArray.push(week.weekStatus)
     });
 
     const weekTrue = tempArray.indexOf(true);
@@ -324,8 +349,8 @@ const functionBtnPreviousWeek = () => {
 
     let tempArray = [];
 
-    pointerWeek.forEach(element => {
-        tempArray.push(element.weekStatus)
+    pointerWeek.forEach(week => {
+        tempArray.push(week.weekStatus)
     });
 
     const weekTrue = tempArray.indexOf(true);
@@ -350,21 +375,21 @@ const functionBtnPreviousWeek = () => {
 
 const functionShowBooking = () => {
 
-    pointerWeek.forEach(element => {
+    pointerWeek.forEach(week => {
 
-        element.weekData.forEach(day => {
+        week.weekData.forEach(day => {
 
             day.times.forEach(time => {
 
                 if (time.bookedBy == userLoggedin) {
 
                     const p = document.createElement('p');
-                    p.textContent = 'You have booked on ' + day.day + ' at ' + time.time + ' in week ' + element.weekNumber;
+                    p.textContent = 'You have booked on ' + day.day + ' at ' + time.time + ' in week ' + week.weekNumber;
                     document.getElementById('divShowBooking').appendChild(p);
 
                     const btn = document.createElement('button');
                     btn.textContent = 'Cancel this booking';
-                    btn.id = day.day + "," + time.time + "," + element.weekName;
+                    btn.id = day.day + "," + time.time + "," + week.weekName;
                     btn.className = 'btnCancelBookingClass';
                     btn.addEventListener('click', functionBtnCancelBooking)
                     document.getElementById('divShowBooking').appendChild(btn);
@@ -382,11 +407,11 @@ const functionBtnCancelBooking = (event) => {
     let btnTime = id[1];
     let btnWeek = id[2];
 
-    pointerWeek.forEach(element => {
+    pointerWeek.forEach(week => {
 
-        if (element.weekName == btnWeek) {
+        if (week.weekName == btnWeek) {
 
-            element.weekData.forEach(day => {
+            week.weekData.forEach(day => {
 
                 if (day.day == btnDay) {
 
@@ -398,10 +423,19 @@ const functionBtnCancelBooking = (event) => {
 
                                 if (user.email == userLoggedin) {
 
-                                    user.timeBooked = null;
-                                    user.weekBooked = null;
-                                    time.bookedBy = null;
-                                    time.booked = false;
+                                    user.bookings.forEach(booking => {
+                                        if (booking.currentBooking == true) {
+
+                                            booking.booked = false;
+                                            booking.bookedInfo = null;
+                                            booking.weekBooked = null;
+                                            booking.dayBooked = null;
+                                            booking.timeBooked = null;
+                                            booking.currentBooking = false;
+                                            time.bookedBy = null;
+                                            time.booked = false;
+                                        }
+                                    });
                                 }
                             });
                         }
