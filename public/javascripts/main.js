@@ -71,6 +71,34 @@ let load = (res) => {
 
     } else {
         functionPrintWeeks();
+
+        dataUsers.forEach(user => {
+
+            if (user.email == userLoggedin) {
+                let counterBooking = 0;
+
+                user.bookings.forEach(booking => {
+                    if (booking.booked == true) {
+                        counterBooking++;
+
+                    }
+                    if (counterBooking == dataUsers[0].bookings.length) {
+                        let btnBookArray = document.getElementsByClassName('btnBookClass');
+
+                        for (let i = 0; i < btnBookArray.length; i++) {
+                            btnBookArray[i].disabled = true;
+                            if (btnBookArray[i].className.includes('bookedByUser')) {
+                                btnBookArray[i].disabled = false;
+                            }
+                        }
+
+                        let h3 = document.createElement('h3');
+                        h3.textContent = 'You have already booked a time. You need to first cancel your previous booking';
+                        document.getElementById('divBook').prepend(h3);
+                    }
+                });
+            }
+        });
     }
 }
 
@@ -142,36 +170,9 @@ const functionPrintWeeks = () => {
                         btn.addEventListener('click', functionBtnCancelBooking);
                         btn.textContent = 'You have booked this time ' + time.time;
                         btn.classList.add('bookedByUser');
+                        btn.disabled = false;
                     }
                 });
-            });
-        }
-    });
-
-    dataUsers.forEach(user => {
-
-        if (user.email == userLoggedin) {
-            let counterBooking = 0;
-
-            user.bookings.forEach(booking => {
-                if (booking.booked == true) {
-                    counterBooking++;
-
-                }
-                if (counterBooking == dataUsers[0].bookings.length) {
-                    let btnBookArray = document.getElementsByClassName('btnBookClass');
-
-                    for (let i = 0; i < btnBookArray.length; i++) {
-                        btnBookArray[i].disabled = true;
-                        if (btnBookArray[i].className.includes('bookedByUser')) {
-                            btnBookArray[i].disabled = false;
-                        }
-                    }
-
-                    let h3 = document.createElement('h3');
-                    h3.textContent = 'You have already booked a time. You need to first cancel your previous booking';
-                    document.getElementById('divBook').prepend(h3);
-                }
             });
         }
     });
@@ -184,10 +185,9 @@ const functionBtnBook = (event) => {
     document.getElementById('btnPreviousWeekId').disabled = true;
     document.getElementById('btnNextWeekId').disabled = true;
 
-    let btnBookArray = document.getElementsByClassName('btnBookClass');
-    for (let i = 0; i < btnBookArray.length; i++) {
-        btnBookArray[i].disabled = true;
-    }
+
+
+    functionDisableButtons();
 
     const id = event.target.id.split(',');
 
@@ -209,6 +209,7 @@ const functionBtnBook = (event) => {
                                     let counterBooking = 0;
 
                                     user.bookings.forEach(booking => {
+
                                         if (booking.booked == false && counterBooking == 0) {
 
                                             booking.booked = true;
@@ -260,13 +261,7 @@ const functionBtnCancel = () => {
     document.getElementById('btnCancelId').disabled = true;
     document.getElementById('btnConfirmId').disabled = true;
 
-    let btnBookArray = document.getElementsByClassName('btnBookClass');
-
-    for (let i = 0; i < btnBookArray.length; i++) {
-        if (!btnBookArray[i].className.includes('booked')) {
-            btnBookArray[i].disabled = false;
-        }
-    }
+    functionDisableButtons();
 
     pointerWeek.forEach(week => {
 
@@ -280,7 +275,7 @@ const functionBtnCancel = () => {
                         if (time.bookedBy == user.email) {
 
                             user.bookings.forEach(booking => {
-                                if (booking.currentBooking == true) {
+                                if (booking.currentBooking == true && time.time == booking.timeBooked && day.day == booking.dayBooked) {
 
                                     booking.booked = false;
                                     booking.bookedInfo = null;
@@ -299,18 +294,6 @@ const functionBtnCancel = () => {
             });
         }
     });
-
-    if (pointerWeek[0].weekStatus == true) {
-        document.getElementById('btnNextWeekId').disabled = false;
-    }
-    if (pointerWeek[1].weekStatus == true) {
-        document.getElementById('btnPreviousWeekId').disabled = false;
-        document.getElementById('btnNextWeekId').disabled = false;
-    }
-    if (pointerWeek[2].weekStatus == true) {
-        document.getElementById('btnPreviousWeekId').disabled = false;
-        document.getElementById('btnNextWeekId').disabled = false;
-    }
 
     functionPrintWeeks();
 }
@@ -375,6 +358,14 @@ const functionBtnPreviousWeek = () => {
     functionPrintWeeks();
 }
 
+const functionDisableButtons = () => {
+    let btnBookArray = document.getElementsByClassName('btnBookClass');
+
+    for (let i = 0; i < btnBookArray.length; i++) {
+        btnBookArray[i].disabled = true;
+    }
+}
+
 const functionShowBooking = () => {
 
     pointerWeek.forEach(week => {
@@ -402,6 +393,8 @@ const functionShowBooking = () => {
 }
 
 const functionBtnCancelBooking = (event) => {
+
+    functionDisableButtons();
 
     const id = event.target.id.split(',');
 
@@ -447,10 +440,9 @@ const functionBtnCancelBooking = (event) => {
     });
 
     document.getElementById('btnConfirmId').disabled = false;
-    // document.getElementById('btnCancelId').disabled = false;
+    document.getElementById('btnCancelId').disabled = true;
     document.getElementById('btnPreviousWeekId').disabled = true;
     document.getElementById('btnNextWeekId').disabled = true;
-
 }
 
 const functionBtnSignOut = () => {
