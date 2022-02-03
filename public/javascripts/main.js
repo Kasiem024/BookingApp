@@ -4,20 +4,20 @@ console.log('main.js is alive');
 
 console.log(document.cookie);
 
-let dataUsers = [];
-
-let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 let date = new Date();
 
-let janOne = new Date(date.getFullYear(), 0, 1);
-let numberDays = Math.floor((date - janOne) / (24 * 60 * 60 * 1000));
-let weekNumber = Math.ceil((date.getDay() + 1 + numberDays) / 7);
+const janOne = new Date(date.getFullYear(), 0, 1);
+const numberDays = Math.floor((date - janOne) / (24 * 60 * 60 * 1000));
+const weekNumber = Math.ceil((date.getDay() + 1 + numberDays) / 7);
 
-let pointerWeek = [];
+let pointerWeek = [],
+    dataUsers = [],
+    userLoggedin;
 
-let userLoggedin;
-
+// Checking if user is logged in with cookies
+// If not redirects to login page
 try {
     if (document.cookie != null) {
 
@@ -65,6 +65,7 @@ let load = (res) => {
     console.log(dataUsers);
     console.log(pointerWeek);
 
+    // Functions for showBooking page are included in this file for their simplicity
     if (location.href.includes('showBooking')) {
 
         functionShowBooking();
@@ -106,6 +107,7 @@ const functionPrintWeeks = () => {
 
     document.getElementById('divBook').innerHTML = null;
 
+    // Creates all buttons with data from pointerWeek
     pointerWeek.forEach(week => {
         if (week.weekStatus == true) {
 
@@ -151,14 +153,6 @@ const functionPrintWeeks = () => {
                         }
                     });
 
-                    // let btnDate = new Date();
-
-                    // let numberWeek = week.weekName.replace(/^\D+/g, '');
-
-                    // btnDate.setDate(date.getDate() + (counterDay + (numberWeek * 7)));
-
-                    // console.log(btnDate);
-
                     if (time.booked == true) {
                         btn.disabled = true;
                         btn.textContent = 'Already booked ' + time.time;
@@ -185,15 +179,13 @@ const functionBtnBook = (event) => {
     document.getElementById('btnPreviousWeekId').disabled = true;
     document.getElementById('btnNextWeekId').disabled = true;
 
-
-
     functionDisableButtons();
 
     const id = event.target.id.split(',');
 
-    let btnDay = id[0];
-    let btnTime = id[1];
-    let btnWeek = id[2];
+    let btnDay = id[0],
+        btnTime = id[1],
+        btnWeek = id[2];
 
     pointerWeek.forEach(week => {
         if (week.weekStatus == true) {
