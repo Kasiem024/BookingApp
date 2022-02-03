@@ -3,21 +3,21 @@ extends layout
 block content
   script(src="/javascripts/main.js") 
   #container.container
-    h1= title  
-    h2 What time do you want to book?
+    h1.text-center= title  
+    h3.text-center First find which time in what week you want to book then press confirm!
     .row.py-3
-      .col.col-auto.col-md-6.col-sm-12
-        button#btnConfirmId(onclick='functionBtnConfirm()' class='btn btn-primary mx-3' disabled) Confirm
-      .col.col-auto.col-md-6.col-sm-12
-        button#btnCancelId(onclick='functionBtnCancel()' class='btn btn-primary mx-3' disabled) Cancel
+      .col
+        button#btnConfirmId(onclick='functionBtnConfirm()' class='btn btn-primary mx-3 my-2' disabled) Confirm
+      .col
+        button#btnCancelId(onclick='functionBtnCancel()' class='btn btn-primary mx-3 my-2' disabled) Cancel
     .row.py-3
-      .col.col-auto.col-md-6.col-sm-12
-        button#btnPreviousWeekId(onclick='functionBtnPreviousWeek()' class='btn btn-primary mx-3' disabled) Previous Week
-      .col.col-auto.col-md-6.col-sm-12
-        button#btnNextWeekId(onclick='functionBtnNextWeek()' class='btn btn-primary mx-3') Next Week
+      .col
+        button#btnPreviousWeekId(onclick='functionBtnPreviousWeek()' class='btn btn-primary mx-3 my-2' disabled) Previous Week
+      .col
+        button#btnNextWeekId(onclick='functionBtnNextWeek()' class='btn btn-primary mx-3 my-2') Next Week
     .row.py-3
-      .col.col-auto.col-md-6.col-sm-12
-        a(href="/showBooking") Show Booking
-      .col.col-auto.col-md-6.col-sm-12
-        button#btnSignOutId(onclick='functionBtnSignOut()' class='btn btn-primary mx-2') Signout
-  #divBook.container-fluid
+      .col
+        button(href="/showBooking" class='btn btn-primary mx-2 my-2') Show Booking
+      .col
+        button#btnSignOutId(onclick='functionBtnSignOut()' class='btn btn-primary mx-2 my-2') Signout
+  #divBook.container
